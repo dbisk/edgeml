@@ -1,0 +1,12 @@
+# Python files
+*.pyc
+
+# C compiler outputs
+*.so
+*.o
+
+# Environment files
+.vscode
+.env
+env
+venv
