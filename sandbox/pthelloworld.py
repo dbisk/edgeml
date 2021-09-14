@@ -13,6 +13,7 @@ import torch
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision import transforms
+from tqdm import tqdm
 
 from models import ptmodel
 
@@ -50,20 +51,24 @@ optimizer = torch.optim.SGD(model.parameters(), lr=1e-3)
 def train(dataloader, model, criterion, optimizer):
     size = len(dataloader.dataset)
     model.train()
-    for batch, (X, y) in enumerate(dataloader):
-        X, y = X.to(device), y.to(device)
+    with tqdm(dataloader, unit='batches') as tbatch:
+        count = 0 # only needed for progress bar
+        for X, y in tbatch:
+            X, y = X.to(device), y.to(device)
 
-        # compute prediction error
-        pred = model(X)
-        loss = criterion(pred, y)
+            # compute prediction error
+            pred = model(X)
+            loss = criterion(pred, y)
 
-        # backpropogation
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+            # backpropogation
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
 
-    loss, current = loss.item(), batch * len(X)
-    print(f"loss: {loss:>7f} [{current:>5d}/{size:>5d}]")
+            # update the progress bar
+            count = count % 10 + 1
+            if count == 1:
+                tbatch.set_postfix_str(f'Loss: {loss.item():.3f}')
 
 # define testing function
 def test(dataloader, model, criterion):
