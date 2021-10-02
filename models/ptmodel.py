@@ -8,6 +8,7 @@
 import torch
 import torch.nn as nn
 
+
 class BasicConv2DModel(nn.Module):
     def __init__(self):
         super(BasicConv2DModel, self).__init__()

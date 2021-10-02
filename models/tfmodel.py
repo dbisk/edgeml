@@ -9,6 +9,7 @@ import tensorflow as tf
 import tensorflow.keras.layers as layers
 from tensorflow.keras import Model
 
+
 class BasicConv1DModel(Model):
     def __init__(self):
         super(BasicConv1DModel, self).__init__()
