@@ -1,0 +1,7 @@
+memory-profiler
+torch
+torchvision
+tqdm
+tensorflow
+
+
