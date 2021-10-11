@@ -1,5 +1,9 @@
 """
 Experiments with the sudormrf model.
+
+@author Dean Biskup
+@email <dbiskup2@illinois.edu>
+@org University of Illinois, Urbana-Champaign Audio Group
 """
 
 from pathlib import Path
@@ -7,6 +11,7 @@ import sys
 sys.path.append(str(Path(__file__).absolute().parent.parent))
 
 import torch
+from tqdm import tqdm
 # import torch.profiler as profiler
 
 from models import sudormrf
@@ -52,24 +57,25 @@ optimizer = torch.optim.Adam(model.parameters())
 
 # use memory_profiler to profile memory instead
 try:
-    @profile
     def forward_pass(model, dummy_input):
         with torch.no_grad():
             estimated_sources = model(dummy_input)
         return estimated_sources
 
-
-    @profile
     def backward_pass(model, dummy_input, dummy_targets):
-        for i in range(5):
-            optimizer.zero_grad()
-            estimated_sources = model(dummy_input)
-            loss = criterion(estimated_sources, dummy_targets)
-            loss.backward()
-            optimizer.step()
-
-    
-    estimated_sources = forward_pass(model, dummy_input)
-    backward_pass(model, dummy_input, dummy_targets)
+        optimizer.zero_grad()
+        estimated_sources = model(dummy_input)
+        loss = criterion(estimated_sources, dummy_targets)
+        loss.backward()
+        optimizer.step()
+ 
+    for i in tqdm(range(100)):
+        dummy_input = torch.rand(1, 1, 8000)
+        dummy_input = dummy_input.to(device)
+        dummy_targets = torch.rand(1, 2, 8000)
+        dummy_targets = dummy_targets.to(device)
+        backward_pass(model, dummy_input, dummy_targets)
+    # estimated_sources = forward_pass(model, dummy_input)
+    # backward_pass(model, dummy_input, dummy_targets)
 except NameError:
     print(f"Failed to instantiate @profile decorator. Was this script run with `python3 -m memory_profiler sudormrftest.py`?")

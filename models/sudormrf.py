@@ -3,7 +3,7 @@
 @brief SuDO-RM-RF model
 
 @author Efthymios Tzinis
-@email etzinis2@illinois.edu
+@email <etzinis2@illinois.edu>
 @org University of Illinois, Urbana-Champaign Audio Group
 """
 
