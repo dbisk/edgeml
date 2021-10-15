@@ -33,8 +33,8 @@ test_data = datasets.MNIST(
 )
 
 # define dataloaders for the datasets
-train_dataloader = DataLoader(train_data, batch_size=64)
-test_dataloader = DataLoader(test_data, batch_size=64)
+train_dataloader = DataLoader(train_data, batch_size=1)
+test_dataloader = DataLoader(test_data, batch_size=1)
 
 # import a test model from the models subdirectory
 model = ptmodel.BasicConv2DModel()
