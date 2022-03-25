@@ -1,9 +1,8 @@
-# Researching ML on embedded systems
+# Sandbox for Researching Federated Learning at the Edge
 
-Currently a hodgepodge repository with various things for setting up ML on some embedded devices,
-such as Raspberry Pis or NVIDIA Jetsons. 
+This is a sandbox or hodgepodge repository, containing various components of
+my Master's thesis on FL and ML on real edge hardware. Most of the work in this
+repository focuses on utilities to set up and run federated learning experiments
+on Raspberry Pis, Coral, and Jetson Nano single-board computers (SBCs). 
 
-Setup scripts for specific hardware are in the `setup` folder.
-
-Repository name subject to change as the project develops!
-
+## Contributors and Acknowledgements.
