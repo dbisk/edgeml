@@ -1,9 +1,14 @@
 """
-models.quantized.qsudormrf - Quantized version of the SuDORM-RF model in the parent directory.
+models.quantized.qsudormrf - Quantized version of the SuDORM-RF model in the
+parent directory.
 
-Currently a prototype implementation, this model attempts to take advantage of either Quantization
-Aware Training (QAT) or Static Quantizaton using PyTorch's Eager Mode Quantization. More info
-found [in the PyTorch quantization docs](https://pytorch.org/docs/stable/quantization.html).
+Currently a prototype implementation, this model attempts to take advantage of
+either Quantization Aware Training (QAT) or Static Quantizaton using PyTorch's
+Eager Mode Quantization. More info found
+[in the PyTorch quantization docs](https://pytorch.org/docs/stable/quantization.html).
+
+Note: an issue was found when using this model where some weights would converge
+to NaNs and the model would fail to learn anything.
 
 @author Dean Biskup
 @email <dbiskup2@illinois.edu>
@@ -16,8 +21,9 @@ from ..sudormrf import SuDORMRF
 
 class QSuDORMRF(SuDORMRF):
     """
-    Quantized version of SuDORMRF. Current prototype is compatible with PyTorch's Eager Mode
-    Quantization, in either the Static Quantization or QAT forms. 
+    Quantized version of SuDORMRF. Current prototype is compatible with
+    PyTorch's Eager Mode Quantization, in either the Static Quantization or QAT
+    forms. 
     """
 
     def __init__(self,
