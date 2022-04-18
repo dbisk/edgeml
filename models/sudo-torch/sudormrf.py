@@ -301,3 +301,16 @@ class SuDORMRF(nn.Module):
     def remove_trailing_zeros(padded_x, initial_x):
         return padded_x[..., :initial_x.shape[-1]]
 
+
+if __name__ == "__main__":
+    model = SuDORMRF(out_channels=128,
+                     in_channels=512,
+                     num_blocks=16,
+                     upsampling_depth=4,
+                     enc_kernel_size=21,
+                     enc_num_basis=512,
+                     num_sources=2)
+
+    dummy_input = torch.rand(3, 1, 32079)
+    estimated_sources = model(dummy_input)
+    print(estimated_sources.shape)
