@@ -14,7 +14,7 @@ import torch
 from tqdm import tqdm
 # import torch.profiler as profiler
 
-from models import sudormrf
+from models.sudotorch import sudormrf
 
 # prepare fake data 
 dummy_input = torch.rand(1, 1, 8000)

@@ -19,7 +19,7 @@ sys.path.append(str(Path(__file__).absolute().parent.parent))
 import torch
 from tqdm import tqdm
 
-from models import sudormrf
+from models.sudotorch import sudormrf
 
 # script should not be imported
 if __name__ != '__main__':
