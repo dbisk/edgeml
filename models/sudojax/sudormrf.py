@@ -274,7 +274,8 @@ class SuDORMRF(hk.Module):
         x = self.encoder(x)
 
         # split paths
-        s = x.clone()
+        # s = x.clone()
+        s = x.copy()
 
         # separation module
         x = self.ln(x)

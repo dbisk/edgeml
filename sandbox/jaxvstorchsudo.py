@@ -26,11 +26,11 @@ from models.sudojax import sudormrf as sudojax
 from models.sudotorch import sudormrf as sudotorch
 
 # meta testing parameters
-NUM_LOOPS = 100
+NUM_LOOPS = 1000
 SEED = 42
 
 # parameters for data shapes
-BATCH_SIZE = 1
+BATCH_SIZE = 4
 SAMPLES = 16000
 
 # define testing functions
@@ -48,10 +48,15 @@ def test_sudojax_forward(data: np.ndarray):
     ))
     params = net.init(jax.random.PRNGKey(SEED), dummy_input)
 
+    # utilize jax.jit to increase speed
+    @jax.jit
+    def forward(p, x):
+        return net.apply(p, x)
+
     # time the forward pass loop
     st = time.perf_counter()
     for i in tqdm(range(NUM_LOOPS)):
-        estimated_sources = net.apply(params, dummy_input)
+        estimated_sources = forward(params, dummy_input)
     et = time.perf_counter()
     avg_elapsed = (et - st)*1.0/NUM_LOOPS
     return avg_elapsed
@@ -65,6 +70,11 @@ def test_sudotorch_forward(data: np.ndarray):
         out_channels=128, in_channels=512, num_blocks=16, upsampling_depth=4,
         enc_kernel_size=21, enc_num_basis=512, num_sources=2
     )
+
+    if torch.cuda.is_available():
+        print("Using CUDA")
+        dummy_input = dummy_input.to('cuda')
+        model = model.to('cuda')
 
     # time the forward pass loop
     st = time.perf_counter()
