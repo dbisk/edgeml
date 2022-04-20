@@ -12,7 +12,7 @@ found [in the PyTorch quantization docs](https://pytorch.org/docs/stable/quantiz
 
 import torch
 
-from ..sudormrf import SuDORMRF
+from ..sudotorch.sudormrf import SuDORMRF
 
 class QSuDORMRF(SuDORMRF):
     """
