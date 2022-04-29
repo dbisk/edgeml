@@ -51,7 +51,7 @@ else:
 model = sudormrf.SuDORMRF(
     out_channels=256,
     in_channels=512,
-    num_blocks=8,
+    num_blocks=4,
     upsampling_depth=4,
     enc_kernel_size=21,
     enc_num_basis=512,
